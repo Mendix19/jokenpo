@@ -3,123 +3,160 @@ import 'dart:math';
 
 class game extends StatefulWidget {
   const game({Key? key}) : super(key: key);
+
   @override
   _gameState createState() => _gameState();
 }
 
 class _gameState extends State<game> {
-  var _imageApp = AssetImage("images/padrao.png");
-  var message = "Escolha do aplicativo";
+  var imageApp = AssetImage("images/padrao.png");
+  var message = "RESULTADO:";
 
-  opcaoselecionada(String userchoose) {
+  optionselect(String chooseuser) {
     var opcoes = ["pedra", "papel", "tesoura"];
-    var numero = Random().nextInt(3);
-    var escolhaApp = opcoes[numero];
+    var choose = Random().nextInt(3);
+    var chooseApp = opcoes[choose];
 
-    switch (escolhaApp) {
+    switch (chooseApp) {
       case "pedra":
         setState(() {
-          this._imageApp = AssetImage("images/pedra.png");
+          imageApp = AssetImage("images/pedra.png");
         });
         break;
       case "papel":
         setState(() {
-          this._imageApp = AssetImage("images/papel.png");
+          imageApp = AssetImage("images/papel.png");
         });
         break;
       case "tesoura":
         setState(() {
-          this._imageApp = AssetImage("images/tesoura.png");
+          imageApp = AssetImage("images/tesoura.png");
         });
-        break;
     }
 
-    if (userchoose == "pedra" && escolhaApp == "tesoura" ||
-        userchoose == "tesoura" && escolhaApp == "papel" ||
-        userchoose == "papel" && escolhaApp == "pedra") {
+    if (chooseuser == "pedra" && chooseApp == "tesoura" ||
+        chooseuser == "tesoura" && chooseApp == "papel" ||
+        chooseuser == "papel" && chooseApp == "pedra") {
       setState(() {
-        message = "Você ganhou!";
+        message = "VOCÊ VENCEU :)";
       });
-    } else if (escolhaApp == "pedra" && userchoose == "tesoura" ||
-        escolhaApp == "tesoura" && userchoose == "papel" ||
-        escolhaApp == "papel" && userchoose == "pedra") {
+    } else if (chooseApp == "pedra" && chooseuser == "tesoura" ||
+        chooseApp == "tesoura" && chooseuser == "papel" ||
+        chooseApp == "papel" && chooseuser == "pedra") {
       setState(() {
-        message = "Você perdeu!";
+        message = "VOCÊ PERDEU :(";
       });
-    } else if (escolhaApp == userchoose) {
-      message = "Empatamos!";
+    } else {
+      message = "EMPATAMOS :|";
     }
-    ;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text("JOKENPO"),
-        ),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.only(top: 32, bottom: 16),
-              child: Text(
-                this.message,
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-                textAlign: TextAlign.center,
+      appBar: AppBar(
+        title: Text("JOKENPO"),
+        backgroundColor: Colors.green,
+      ),
+      body: Column(
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.only(top: 32, bottom: 16),
+            child: Text(
+              message,
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.red,
               ),
             ),
-            Image(
-              image: this._imageApp,
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 32, bottom: 16),
-              child: Text(
-                "Escolha uma opção",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-                textAlign: TextAlign.center,
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 10, bottom: 15, left: 5),
+            child: Text(
+              "ESCOLHA DO APP:",
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                GestureDetector(
-                    onTap: () {
-                      opcaoselecionada("pedra");
-                    },
-                    child: Image.asset(
-                      "images/pedra.png",
-                      width: 100,
-                    )),
-                GestureDetector(
-                    onTap: () {
-                      opcaoselecionada("papel");
-                    },
-                    child: Image.asset(
-                      "images/papel.png",
-                      width: 100,
-                    )),
-                GestureDetector(
-                    onTap: () {
-                      opcaoselecionada("tesoura");
-                    },
-                    child: Image.asset(
-                      "images/tesoura.png",
-                      width: 100,
-                    )),
-              ],
+          ),
+          Image(image: this.imageApp),
+          Padding(
+            padding: EdgeInsets.only(top: 32, bottom: 32),
+            child: Text(
+              "ESCOLHA UMA OPÇÃO:",
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [Text("Pedra"), Text("Papel"), Text("Tesoura")],
-            )
-          ],
-        ));
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              GestureDetector(
+                onTap: () {
+                  optionselect("pedra");
+                },
+                child: Image.asset(
+                  "images/pedra.png",
+                  width: 120,
+                ),
+              ),
+              GestureDetector(
+                  onTap: () {
+                    optionselect("papel");
+                  },
+                  child: Image.asset(
+                    "images/papel.png",
+                    width: 120,
+                  )),
+              GestureDetector(
+                  onTap: () {
+                    optionselect("tesoura");
+                  },
+                  child: Image.asset(
+                    "images/tesoura.png",
+                    width: 120,
+                  )),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Padding(padding: EdgeInsets.only(top: 60)),
+              Padding(
+                padding: EdgeInsets.only(left: 50, right: 65),
+                child: Text(
+                  "PEDRA",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(right: 55),
+                child: Text(
+                  "PAPEL",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              Text(
+                "TESOURA",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          )
+        ],
+      ),
+    );
   }
 }
